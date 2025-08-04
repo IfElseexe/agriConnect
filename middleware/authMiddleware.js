@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/user.model.js'; // adjust path if needed
+import User from '../models/user.model.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -12,7 +12,7 @@ export const authenticateUser = async (req, res, next) => {
       const token = authHeader.split(' ')[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      req.user = await User.findById(decoded.id).select('-password'); // attach user to req
+      req.user = await User.findById(decoded.id).select('-password');
       next();
     } catch (err) {
       return res.status(401).json({ message: 'Invalid or expired token' });
